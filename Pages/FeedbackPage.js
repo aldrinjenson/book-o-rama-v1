@@ -1,14 +1,14 @@
-import React from "react";
-import { Text, View, StyleSheet, TextInput, Alert, Image } from "react-native";
-import { globalStyles } from "../global/globalStyles";
-import { Formik } from "formik";
-import * as yup from "yup";
+import React from 'react';
+import {Text, View, StyleSheet, TextInput, Alert, Image} from 'react-native';
+import {globalStyles} from '../global/globalStyles';
+import {Formik} from 'formik';
+import * as yup from 'yup';
 
-import * as firebase from "firebase";
-import "firebase/firestore";
-import firebaseConfig from "../config/firebaseConfig";
-import CustomButton from "../components/CustomButton";
-import { Paragraph } from "react-native-paper";
+import * as firebase from 'firebase';
+import 'firebase/firestore';
+import firebaseConfig from '../config/firebaseConfig';
+import CustomButton from '../components/CustomButton';
+import {Paragraph} from 'react-native-paper';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -17,11 +17,11 @@ if (!firebase.apps.length) {
 const dbh = firebase.firestore();
 
 const handleSubmit = (values) => {
-  dbh.collection("feedback").doc(values.name).set({
+  dbh.collection('feedback').doc(values.name).set({
     email: values.email,
     feedback: values.feedback,
   });
-  Alert.alert("Your feedback has been sent. Thank you :)");
+  Alert.alert('Your feedback has been sent. Thank you :)');
 };
 
 const feedbackSchema = yup.object({
@@ -42,31 +42,30 @@ const FeedbackPage = () => {
       </View>
 
       <Formik
-        initialValues={{ name: "", email: "", feedback: "" }}
+        initialValues={{name: '', email: '', feedback: ''}}
         validationSchema={feedbackSchema}
         onSubmit={(values, actions) => {
           handleSubmit(values);
           actions.resetForm();
-        }}
-      >
+        }}>
         {(props) => (
           <View>
             <TextInput
               placeholder="Name"
-              onChangeText={props.handleChange("name")}
+              onChangeText={props.handleChange('name')}
               style={styles.feedbackInput}
               value={props.values.name}
-              onBlur={props.handleBlur("name")}
+              onBlur={props.handleBlur('name')}
             />
             <Text style={styles.errorText}>
               {props.touched.name && props.errors.name}
             </Text>
             <TextInput
               placeholder="E-mail"
-              onChangeText={props.handleChange("email")}
+              onChangeText={props.handleChange('email')}
               style={styles.feedbackInput}
               value={props.values.email}
-              onBlur={props.handleBlur("email")}
+              onBlur={props.handleBlur('email')}
             />
             <Text style={styles.errorText}>
               {props.touched.email && props.errors.email}
@@ -75,10 +74,10 @@ const FeedbackPage = () => {
               placeholder="Feedback"
               multiline
               minHeight={75}
-              onChangeText={props.handleChange("feedback")}
+              onChangeText={props.handleChange('feedback')}
               style={styles.feedbackInput}
               value={props.values.feedback}
-              onBlur={props.handleBlur("feedback")}
+              onBlur={props.handleBlur('feedback')}
             />
             <Text style={styles.errorText}>
               {props.touched.feedback && props.errors.feedback}
@@ -88,7 +87,7 @@ const FeedbackPage = () => {
         )}
       </Formik>
       <Text style={globalStyles.footer}>
-        Made With <Image source={require("../assets/heart.png")} />
+        Made With <Image source={require('../assets/heart.png')} />
       </Text>
     </View>
   );
@@ -99,22 +98,22 @@ export default FeedbackPage;
 const styles = StyleSheet.create({
   feedbackInput: {
     borderWidth: 1,
-    borderColor: "#aaa",
+    borderColor: '#aaa',
     padding: 10,
     fontSize: 18,
     borderRadius: 6,
   },
   errorText: {
-    color: "#2196F3",
+    color: '#2196F3',
     marginBottom: 10,
   },
   textContent: {
     // justifyContent:'center',
-    alignItems: "center",
+    alignItems: 'center',
     marginBottom: 40,
     paddingVertical: 10,
   },
-  feedbackPage:{
+  feedbackPage: {
     ...globalStyles.container,
-  }
+  },
 });

@@ -19,7 +19,7 @@ const HomeTab = ({navigation}) => {
   const [extraTraffic, setExtraTraffic] = useState(false);
 
   const fetchData = async () => {
-    console.log('fetching from API');
+    ('fetching from API');
     const API_URL = baseUrl + query + '?api-key=' + apiKey;
     try {
       const res = await axios.get(API_URL);
@@ -56,11 +56,9 @@ const HomeTab = ({navigation}) => {
       if (stringedSavedDate == null) return true; // First time
 
       const savedDate = new Date(stringedSavedDate);
-      // console.log( typeof savedDate)
       var toDate = new Date(
         dt.getDate() + '/' + (dt.getMonth() + 1) + '/' + dt.getFullYear(),
       );
-      // console.log(savedDate + '\n' + toDate)
       if (savedDate == toDate) return false;
 
       const differenceInTime = toDate.getTime() - savedDate.getTime();
@@ -114,7 +112,7 @@ const HomeTab = ({navigation}) => {
             style={{marginBottom: 30}}
           />
 
-          <Text style={{marginTop: 20, alignSelf:'center'}}>
+          <Text style={{marginTop: 20, alignSelf: 'center'}}>
             Loading New York Times' best sellers collection...
           </Text>
         </View>

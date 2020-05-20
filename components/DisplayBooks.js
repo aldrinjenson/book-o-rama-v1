@@ -6,9 +6,10 @@ import {
   View,
   FlatList,
   Image,
-  ScrollView,
+  Dimensions,
 } from 'react-native';
 import {globalStyles} from '../global/globalStyles';
+import ProgressiveImage from './ProgressiveImage';
 
 const DisplayBooks = ({books, navigation}) => {
   if (!books)
@@ -23,6 +24,8 @@ const DisplayBooks = ({books, navigation}) => {
         <Text>Please check your search query</Text>
       </View>
     );
+
+  const w = Dimensions.get('window');
 
   const handleClick = (item) => {
     let book = {
@@ -47,13 +50,11 @@ const DisplayBooks = ({books, navigation}) => {
   };
   return (
     <View style={styles.bookList}>
-      <ScrollView>
-        {/* <FlatList */}
-        {/* data={books}
-          renderItem={({item})  */}
-        {books.map((item) => {
+      <FlatList
+        data={books}
+        renderItem={({item}) => {
           let imageSource = item.volumeInfo.imageLinks
-            ? {uri: `${item.volumeInfo.imageLinks.thumbnail}`}
+            ? {uri: item.volumeInfo.imageLinks.thumbnail}
             : require('../assets/no_preview_image.png');
           let authors = item.volumeInfo.authors ? item.volumeInfo.authors : [];
           return (
@@ -61,7 +62,14 @@ const DisplayBooks = ({books, navigation}) => {
               key={item.volumeInfo.title}
               onPress={() => handleClick({...item, imageSource, authors})}>
               <View style={styles.horizonatalCard}>
-                <Image style={styles.bookImage} source={imageSource} />
+                <ProgressiveImage
+                  style={styles.bookImage}
+                  source={{
+                    uri: `https://images.pexels.com/photos/671557/pexels-photo-671557.jpeg?w=${
+                      w.width * 2
+                    }&buster=${Math.random()}`,
+                  }}
+                />
                 <View style={styles.textContent}>
                   <Text style={globalStyles.title}>
                     {item.volumeInfo.title}
@@ -71,8 +79,8 @@ const DisplayBooks = ({books, navigation}) => {
               </View>
             </TouchableOpacity>
           );
-        })}
-      </ScrollView>
+        }}
+      />
     </View>
   );
 };
@@ -81,7 +89,6 @@ export default DisplayBooks;
 
 const styles = StyleSheet.create({
   bookList: {
-    // marginBottom: 120,
     height: '84%',
   },
   horizonatalCard: {

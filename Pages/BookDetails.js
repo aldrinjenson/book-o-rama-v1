@@ -7,6 +7,7 @@ import {
   Button,
   ScrollView,
   Linking,
+  Dimensions,
 } from 'react-native';
 import {ActivityIndicator, FAB, Snackbar, Paragraph} from 'react-native-paper';
 import axios from 'axios';
@@ -39,8 +40,6 @@ const BookDetails = ({route}) => {
         categories: result.data.items[0].volumeInfo.categories,
         previewLink: result.data.items[0].volumeInfo.previewLink,
         pageCount: result.data.items[0].volumeInfo.pageCount,
-        isbn10:
-          result.data.items[0].volumeInfo.industryIdentifiers[0].identifier,
         accessViewStatus: result.data.items[0].accessInfo.accessViewStatus,
       });
       setIsLoaded(true);
