@@ -14,21 +14,21 @@ const HomeTabStack = () => {
         name="Best Sellers"
         component={HomeTab}
         options={{
-          tabBarIcon: () => <Icon name="home" size={23} />,
+          tabBarIcon: ({focused}) => <Icon color={focused ? '#2f95dc': null} name="home" size={23} />,
         }}
       />
       <Tab.Screen
         name="Search Books"
         component={SearchBooks}
         options={{
-          tabBarIcon: () => <Icon name="search" size={23} />,
+          tabBarIcon: ({focused}) => <Icon color={focused ? '#2f95dc': null} name="search" size={23} />,
         }}
       />
       <Tab.Screen
         name="Wish List"
         component={WishList}
         options={{
-          tabBarIcon: () => <Icon name="bookmark" size={23} />,
+          tabBarIcon: ({focused}) => <Icon color={focused ? '#2f95dc': null} name="bookmark" size={23} />,
         }}
       />
     </Tab.Navigator>

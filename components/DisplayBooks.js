@@ -6,10 +6,8 @@ import {
   View,
   FlatList,
   Image,
-  Dimensions,
 } from 'react-native';
 import {globalStyles} from '../global/globalStyles';
-import ProgressiveImage from './ProgressiveImage';
 
 const DisplayBooks = ({books, navigation}) => {
   if (!books)
@@ -24,8 +22,6 @@ const DisplayBooks = ({books, navigation}) => {
         <Text>Please check your search query</Text>
       </View>
     );
-
-  const w = Dimensions.get('window');
 
   const handleClick = (item) => {
     let book = {
@@ -62,14 +58,7 @@ const DisplayBooks = ({books, navigation}) => {
               key={item.volumeInfo.title}
               onPress={() => handleClick({...item, imageSource, authors})}>
               <View style={styles.horizonatalCard}>
-                <ProgressiveImage
-                  style={styles.bookImage}
-                  source={{
-                    uri: `https://images.pexels.com/photos/671557/pexels-photo-671557.jpeg?w=${
-                      w.width * 2
-                    }&buster=${Math.random()}`,
-                  }}
-                />
+                <Image source={imageSource} style={styles.bookImage} />
                 <View style={styles.textContent}>
                   <Text style={globalStyles.title}>
                     {item.volumeInfo.title}

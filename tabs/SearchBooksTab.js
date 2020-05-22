@@ -23,7 +23,6 @@ const SearchBooks = ({navigation}) => {
     fetchData();
   };
 
-
   return (
     <View style={globalStyles.container}>
       <Text>Search by Book name, Author or by ISBN</Text>
