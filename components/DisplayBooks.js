@@ -24,22 +24,38 @@ const DisplayBooks = ({books, navigation}) => {
     );
 
   const handleClick = (item) => {
+    let {
+      industryIdentifiers,
+      title,
+      previewLink,
+      pageCount,
+      categories,
+      publisher,
+      description,
+      publishedDate,
+      authors,
+    } = item.volumeInfo;
+
+    let isbn10 = industryIdentifiers
+      ? industryIdentifiers.find((identifier) => {
+          if (identifier.type === 'ISBN_10') return identifier;
+        }).identifier
+      : title.split(' ').join('-').toLowerCase();
+
     let book = {
-      name: item.volumeInfo.title,
-      publisher: item.volumeInfo.publisher,
-      description: item.volumeInfo.description,
-      publishedDate: item.volumeInfo.publishedDate,
+      name: title,
+      publisher,
+      description,
+      publishedDate,
       isFromNY: false,
       rating: item.volumeInfo.averageRating,
-      imageUrl: item.imageSource,
-      authors: item.authors,
-      categories: item.volumeInfo.categories,
-      previewLink: item.volumeInfo.previewLink,
-      pageCount: item.volumeInfo.pageCount,
-      buyLink:
-        'https://www.amazon.in/dp/' +
-        item.volumeInfo.industryIdentifiers[0].identifier,
-      isbn10: item.volumeInfo.industryIdentifiers[0].identifier,
+      imageUrl: item.imageUrl,
+      authors,
+      categories,
+      previewLink,
+      pageCount,
+      isbn10,
+      buyLink: `https://www.amazon.in/dp/${isbn10}`,
       accessViewStatus: item.accessInfo.accessViewStatus,
     };
     navigation.navigate('BookDetails', book);
@@ -49,16 +65,15 @@ const DisplayBooks = ({books, navigation}) => {
       <FlatList
         data={books}
         renderItem={({item}) => {
-          let imageSource = item.volumeInfo.imageLinks
-            ? {uri: item.volumeInfo.imageLinks.thumbnail}
+          let imageUrl = item.volumeInfo.imageLinks
+            ? {uri: `${item.volumeInfo.imageLinks.thumbnail}`}
             : require('../assets/no_preview_image.png');
           let authors = item.volumeInfo.authors ? item.volumeInfo.authors : [];
           return (
             <TouchableOpacity
-              key={item.volumeInfo.title}
-              onPress={() => handleClick({...item, imageSource, authors})}>
+              onPress={() => handleClick({...item, imageUrl, authors})}>
               <View style={styles.horizonatalCard}>
-                <Image source={imageSource} style={styles.bookImage} />
+                <Image style={styles.bookImage} source={imageUrl} />
                 <View style={styles.textContent}>
                   <Text style={globalStyles.title}>
                     {item.volumeInfo.title}
@@ -78,7 +93,8 @@ export default DisplayBooks;
 
 const styles = StyleSheet.create({
   bookList: {
-    height: '84%',
+    flex: 1,
+    flexDirection: 'row',
   },
   horizonatalCard: {
     borderWidth: 1,

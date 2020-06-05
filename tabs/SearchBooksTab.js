@@ -9,16 +9,13 @@ const SearchBooks = ({navigation}) => {
   const [books, setBooks] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const bookQuery = (query) => {
+    const API_URL = 'https://www.googleapis.com/books/v1/volumes?q=';
     setisLoading(true);
-    const fetchData = async () => {
-      const API_URL = 'https://www.googleapis.com/books/v1/volumes';
-      try {
-        const result = await axios.get(`${API_URL}?q=${query}`);
-        result.data && setBooks(result.data.items);
-        setisLoading(false);
-      } catch (error) {
-        console.log('Error: ' + error);
-      }
+    const fetchData =  () => {
+      axios.get(API_URL + query)
+      .then(res=>setBooks(res.data.items))
+      .then(setisLoading(false))
+      .catch(err=>console.log(err))
     };
     fetchData();
   };
